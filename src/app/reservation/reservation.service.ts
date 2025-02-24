@@ -9,8 +9,15 @@ import { Reservation } from '../models/reservation';
 export class ReservationService {
   private reservations: Reservation[] = [];
 
+  constructor(){
+    let savedReservations = localStorage.getItem("reservations");
+    this.reservations = savedReservations? JSON.parse(savedReservations) : [];
+  }
+
   // CRUD Operations that we want to provide
   // This is using an array and not like a database.
+
+
 
   // Equivalent of GetAll
   getReservations(): Reservation[]{
@@ -23,20 +30,25 @@ export class ReservationService {
   }
 
   // Equivalent of Post
-  addResevation(reservation: Reservation): void {
+  addReservation(reservation: Reservation): void {
+    reservation.id = Date.now.toString();
+
     this.reservations.push(reservation);
+    localStorage.setItem("reservations", JSON.stringify(this.reservations));
   }
 
   // Equivalent of Delete
   deleteReservation(id: string): void {
     let index = this.reservations.findIndex(res => res.id === id);
     this.reservations.splice(index, 1)
+    localStorage.setItem("reservations", JSON.stringify(this.reservations));
   }
 
   // Equivalent of Put
-  updateReservation(updatedReservation: Reservation): void {
-    let index = this.reservations.findIndex(res => res.id === updatedReservation.id)
+  updateReservation(id: string, updatedReservation: Reservation): void {
+    let index = this.reservations.findIndex(res => res.id === id)
     this.reservations[index] = updatedReservation;
+    localStorage.setItem("reservations", JSON.stringify(this.reservations));
   }
 
 }

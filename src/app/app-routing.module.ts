@@ -7,7 +7,8 @@ import { ReservationFormComponent } from './reservation-form/reservation-form.co
 const routes: Routes = [
   {path:"", component: HomeComponent}, // defining the home page
   {path:"list", component: ReservationListComponent},
-  {path:"new", component: ReservationFormComponent}
+  {path:"new", component: ReservationFormComponent},
+  {path: "edit/:id", component: ReservationFormComponent}  // specifying what item we want to edit
 ];
 
 @NgModule({
